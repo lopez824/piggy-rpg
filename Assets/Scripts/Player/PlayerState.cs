@@ -5,11 +5,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerState
 {
-    public Animator anim;
+    public Player player;
 
-    public PlayerState(Animator _anim)
+    public PlayerState(Player _player)
     {
-        anim = _anim;
+        player = _player;
     }
 
     public virtual void enter() { }

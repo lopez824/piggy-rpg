@@ -8,20 +8,25 @@ public class Player : MonoBehaviour
 {
     private PlayerState currentState;
     private PlayerInputActions playerActions;
-    private Quaternion startingRotation;
-    private float gravity = -9.81f;
-    private bool isGrounded = true;
+    private Rigidbody rb;
+    private Vector2 playerInput = Vector2.zero;
+    private Vector3 velocity = Vector3.zero;
+    private Vector3 desiredVelocity = Vector3.zero;
 
     public Animator anim;
+    public Player player;
     public Rigidbody rigidBody;
+    public AudioSource sound;
     public float jumpForce = 0f;
     public float movementSpeed = 5f;
-    public float rotationSpeed = 5f;
+    public float movementAccel = 10f;
+    public float rotationSpeed = 480f;
+    public bool isGrounded = true;
 
     private void Awake()
     {
         playerActions = new PlayerInputActions();
-        startingRotation = transform.rotation;
+        rb = GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
@@ -31,7 +36,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        currentState = new IdleState(anim);
+        currentState = new IdleState(player);
         currentState.enter();
     }
 
@@ -43,30 +48,24 @@ public class Player : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        Vector3 direction = new Vector3(playerActions.Player.Move.ReadValue<Vector2>().x, 0, playerActions.Player.Move.ReadValue<Vector2>().y);
-        Quaternion lookToward = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookToward, Time.deltaTime * rotationSpeed);
         if (context.performed)
             ChangeState(context);
-            
+        if (context.canceled)
+            ChangeState(context);
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
+            isGrounded = false;
             ChangeState(context);
-            if (isGrounded == true)
-            {
-                jumpForce = 5f;
-                isGrounded = false;
-            }
+            rb.AddForce(Vector2.up * jumpForce);
         }
             
         if (context.canceled)
         {
             ChangeState(context);
-            isGrounded = true;
         }
     }
 
@@ -82,35 +81,58 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void ChangeGroundState()
+    {
+        PlayerState newState;
+        if (rb.velocity.x < 1 && rb.velocity.z < 1)
+            newState = new IdleState(player);
+        else
+            newState = new WalkingState(player);
+
+        if (newState != null)
+        {
+            currentState.exit();
+            currentState = newState;
+            currentState.enter();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isGrounded == false)
+        {
+            isGrounded = true;
+            ChangeGroundState();
+        }
+    }
+
     private void OnDisable()
     {
         playerActions.Player.Disable();
     }
 
+    private void Update()
+    {
+        playerInput.x = playerActions.Player.Move.ReadValue<Vector2>().x;
+        playerInput.y = playerActions.Player.Move.ReadValue<Vector2>().y;
+        playerInput = Vector2.ClampMagnitude(playerInput, 1f);
+
+        desiredVelocity = new Vector3(playerInput.x, 0f, playerInput.y) * movementSpeed;
+    }
+
     private void FixedUpdate()
     {
-        Vector3 direction = new Vector3(playerActions.Player.Move.ReadValue<Vector2>().x, 0, playerActions.Player.Move.ReadValue<Vector2>().y);
-        direction.Normalize();
-        transform.Translate(direction * movementSpeed * Time.deltaTime, Space.World);
-        
-        if (direction != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
-        }
-        else
-            transform.rotation = startingRotation;
+        velocity = rb.velocity;
+        float speedDelta = movementAccel * Time.deltaTime;
+        velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, speedDelta);
+        velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, speedDelta);
 
-        if (isGrounded)
-        {
-            jumpForce = 0;
-        }
-        else
-        {
-            jumpForce -= gravity * Time.deltaTime;
-        }
-        transform.position += transform.up * jumpForce * Time.deltaTime;
-        if (direction == Vector3.zero)
+        rb.velocity = velocity;
+
+        if (desiredVelocity == Vector3.zero)
             return;
+        Quaternion targetRotation = Quaternion.LookRotation(desiredVelocity);
+        targetRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+        rb.MoveRotation(targetRotation);
     }
 }

@@ -5,14 +5,16 @@ using UnityEngine.InputSystem;
 
 public class WalkingState : PlayerState
 {
-    public WalkingState(Animator _anim) : base(_anim)
+    public WalkingState(Player _player) : base(_player)
     {
-        anim = _anim;
+        player = _player;
     }
 
     public override void enter()
     {
         Debug.Log("Enter Walk");
+        player.anim.SetTrigger("isWalking");
+        
     }
 
     public override PlayerState handleInput(InputAction.CallbackContext context)
@@ -25,11 +27,14 @@ public class WalkingState : PlayerState
                     update();
                     break;
                 case "Attack":
-                    return new AttackState(anim);
+                    return new AttackState(player);
                 case "Jump":
-                    return new JumpState(anim);
+                    return new JumpState(player);
             }
         }
+
+        if (context.canceled)
+            return new IdleState(player);
 
         return null;
     }
@@ -42,5 +47,6 @@ public class WalkingState : PlayerState
     public override void exit()
     {
         Debug.Log("Exit Walk");
+        player.anim.ResetTrigger("isWalking");
     }
 }

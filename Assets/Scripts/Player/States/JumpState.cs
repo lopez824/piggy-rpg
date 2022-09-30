@@ -5,21 +5,23 @@ using UnityEngine.InputSystem;
 
 public class JumpState : PlayerState
 {
-    public JumpState(Animator _anim) : base(_anim)
+    public JumpState(Player _player) : base(_player)
     {
-        anim = _anim;
+        player = _player;
     }
 
     public override void enter()
     {
         Debug.Log("Enter Jump");
+        player.anim.SetTrigger("isJumping");
+        player.sound.PlayOneShot(AudioLibrary.library["oink_3"]);
     }
 
     public override PlayerState handleInput(InputAction.CallbackContext context)
     {
         if (context.action.name == "Jump")
-            if (context.performed)
-                return new HoveringState(anim);
+            if (context.performed && player.isGrounded == false)
+                return new HoveringState(player);
         
         return null;
     }
@@ -32,5 +34,6 @@ public class JumpState : PlayerState
     public override void exit()
     {
         Debug.Log("Exit Jump");
+        player.anim.ResetTrigger("isJumping");
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 
 public class HoveringState : PlayerState
 {
-    public HoveringState(Animator _anim) : base(_anim)
+    public HoveringState(Player _player) : base(_player)
     {
-        anim = _anim;
+        player = _player;
     }
 
     public override void enter()
@@ -19,7 +19,7 @@ public class HoveringState : PlayerState
     {
         if (context.action.name == "Jump")
             if (context.canceled)
-                return new IdleState(anim);
+                return new IdleState(player);
 
         return null;
     }

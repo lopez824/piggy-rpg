@@ -5,14 +5,15 @@ using UnityEngine.InputSystem;
 
 public class IdleState : PlayerState
 {
-    public IdleState(Animator _anim) : base(_anim)
+    public IdleState(Player _player) : base(_player)
     {
-        anim = _anim;
+        player = _player;
     }
 
     public override void enter()
     {
         Debug.Log("Enter Idle");
+        player.anim.SetTrigger("isIdle");
     }
 
     public override PlayerState handleInput(InputAction.CallbackContext context)
@@ -22,11 +23,11 @@ public class IdleState : PlayerState
             switch (context.action.name)
             {
                 case "Attack":
-                    return new AttackState(anim);
+                    return new AttackState(player);
                 case "Move":
-                    return new WalkingState(anim);
+                    return new WalkingState(player);
                 case "Jump":
-                    return new JumpState(anim);
+                    return new JumpState(player);
             }
         }
 
@@ -41,5 +42,6 @@ public class IdleState : PlayerState
     public override void exit()
     {
         Debug.Log("Exit Idle");
+        player.anim.ResetTrigger("isIdle");
     }
 }

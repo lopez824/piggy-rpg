@@ -5,14 +5,15 @@ using UnityEngine.InputSystem;
 
 public class AttackState : PlayerState
 {
-    public AttackState(Animator _anim) : base(_anim)
+    public AttackState(Player _player) : base(_player)
     {
-        anim = _anim;
+        player = _player;
     }
 
     public override void enter()
     {
         Debug.Log("Enter Attack");
+        player.sound.PlayOneShot(AudioLibrary.library["oink_1"]);
     }
 
     public override PlayerState handleInput(InputAction.CallbackContext context)
@@ -25,9 +26,9 @@ public class AttackState : PlayerState
                     update();
                     break;
                 case "Move":
-                    return new WalkingState(anim);
+                    return new WalkingState(player);
                 case "Jump":
-                    return new JumpState(anim);
+                    return new JumpState(player);
             }
         }
 
@@ -37,6 +38,7 @@ public class AttackState : PlayerState
     public override void update()
     {
         Debug.Log("Attack!");
+        player.sound.PlayOneShot(AudioLibrary.library["oink_1"]);
     }
 
     public override void exit()
