@@ -12,7 +12,7 @@ public class HoveringState : PlayerState
 
     public override void enter()
     {
-        Debug.Log("Enter Hover");
+        //Debug.Log("Enter Hover");
     }
 
     public override PlayerState handleInput(InputAction.CallbackContext context)
@@ -31,6 +31,6 @@ public class HoveringState : PlayerState
 
     public override void exit()
     {
-        Debug.Log("Exit Hover");
+        //Debug.Log("Exit Hover");
     }
 }

@@ -12,7 +12,7 @@ public class AttackState : PlayerState
 
     public override void enter()
     {
-        Debug.Log("Enter Attack");
+        //Debug.Log("Enter Attack");
         player.sound.PlayOneShot(AudioLibrary.library["oink_1"]);
     }
 
@@ -37,12 +37,12 @@ public class AttackState : PlayerState
 
     public override void update()
     {
-        Debug.Log("Attack!");
+        //Debug.Log("Attack!");
         player.sound.PlayOneShot(AudioLibrary.library["oink_1"]);
     }
 
     public override void exit()
     {
-        Debug.Log("Exit Attack");
+        //Debug.Log("Exit Attack");
     }
 }

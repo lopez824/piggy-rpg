@@ -12,7 +12,7 @@ public class JumpState : PlayerState
 
     public override void enter()
     {
-        Debug.Log("Enter Jump");
+        //Debug.Log("Enter Jump");
         player.anim.SetTrigger("isJumping");
         player.sound.PlayOneShot(AudioLibrary.library["oink_3"]);
     }
@@ -33,7 +33,7 @@ public class JumpState : PlayerState
 
     public override void exit()
     {
-        Debug.Log("Exit Jump");
+        //Debug.Log("Exit Jump");
         player.anim.ResetTrigger("isJumping");
     }
 }

@@ -12,7 +12,7 @@ public class IdleState : PlayerState
 
     public override void enter()
     {
-        Debug.Log("Enter Idle");
+        //Debug.Log("Enter Idle");
         player.anim.SetTrigger("isIdle");
     }
 
@@ -41,7 +41,7 @@ public class IdleState : PlayerState
 
     public override void exit()
     {
-        Debug.Log("Exit Idle");
+        //Debug.Log("Exit Idle");
         player.anim.ResetTrigger("isIdle");
     }
 }

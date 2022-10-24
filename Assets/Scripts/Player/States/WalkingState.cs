@@ -12,7 +12,7 @@ public class WalkingState : PlayerState
 
     public override void enter()
     {
-        Debug.Log("Enter Walk");
+        //Debug.Log("Enter Walk");
         player.anim.SetTrigger("isWalking");
         
     }
@@ -41,12 +41,12 @@ public class WalkingState : PlayerState
 
     public override void update()
     {
-        Debug.Log("Walking!");
+        //Debug.Log("Walking!");
     }
 
     public override void exit()
     {
-        Debug.Log("Exit Walk");
+        //Debug.Log("Exit Walk");
         player.anim.ResetTrigger("isWalking");
     }
 }

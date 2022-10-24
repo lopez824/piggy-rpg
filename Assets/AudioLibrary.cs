@@ -14,7 +14,7 @@ public class AudioLibrary : MonoBehaviour
         foreach (AudioClip clip in audioClips)
         {
             library.Add(clip.name, clip);
-            Debug.Log(clip.name);
+            //Debug.Log(clip.name);
         }
             
     }
