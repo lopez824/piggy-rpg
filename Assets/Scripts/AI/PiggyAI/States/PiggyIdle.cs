@@ -11,12 +11,23 @@ public class PiggyIdle : PiggyState
 
     public override void enter()
     {
-        base.enter();
+        Debug.Log("Entered Idle State");
+        piggyController.anim.SetTrigger("isIdle");
+
+        // TODO: Implement Behavior Tree
     }
 
-    public override PiggyState handleEvent()
+    public override PiggyState handleEvent(string name)
     {
-        return base.handleEvent();
+        switch (name)
+        {
+            case "Move":
+                return new PiggyFollow(piggyController);
+            case "Jump":
+                return new PiggyJump(piggyController);
+        }
+
+        return null;
     }
 
     public override void update()
@@ -26,6 +37,7 @@ public class PiggyIdle : PiggyState
 
     public override void exit()
     {
-        base.exit();
+        Debug.Log("Exited Idle State");
+        piggyController.anim.ResetTrigger("isIdle");
     }
 }

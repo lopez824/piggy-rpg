@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     private PlayerState currentState;
     private PlayerInputActions playerActions;
     private Rigidbody rb;
+    private GameObject[] piggyList;
+    private List<PiggyAIController> piggies;
     private Vector2 playerInput = Vector2.zero;
     private Vector3 velocity = Vector3.zero;
     private Vector3 desiredVelocity = Vector3.zero;
@@ -26,6 +28,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         playerActions = new PlayerInputActions();
+        piggies = new List<PiggyAIController>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -36,6 +39,13 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        piggyList = GameObject.FindGameObjectsWithTag("Piggy");
+        foreach (GameObject piggy in piggyList)
+        {
+            piggies.Add(piggy.GetComponent<PiggyAIController>());
+        }
+
+        Debug.Log(piggies.Count);
         currentState = new IdleState(player);
         currentState.enter();
     }
@@ -49,9 +59,22 @@ public class Player : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         if (context.performed)
+        {
             ChangeState(context);
+            foreach(PiggyAIController piggy in piggies)
+            {
+                piggy.ChangeState(context.action.name);
+            }
+        }
+            
         if (context.canceled)
+        {
             ChangeState(context);
+            foreach (PiggyAIController piggy in piggies)
+            {
+                piggy.ChangeState("MoveCancel");
+            }
+        }
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -61,6 +84,13 @@ public class Player : MonoBehaviour
             isGrounded = false;
             ChangeState(context);
             rb.AddForce(Vector2.up * jumpForce);
+
+            foreach (PiggyAIController piggy in piggies)
+            {
+                piggy.isGrounded = false;
+                piggy.ChangeState(context.action.name);
+                piggy.rb.AddForce(Vector2.up * jumpForce * 0.8f);
+            }
         }
             
         if (context.canceled)

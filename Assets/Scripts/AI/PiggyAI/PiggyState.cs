@@ -12,7 +12,7 @@ public class PiggyState
     }
 
     public virtual void enter() { }
-    public virtual PiggyState handleEvent() { return this; }
+    public virtual PiggyState handleEvent(string eventName) { return this; }
     public virtual void update() { }
     public virtual void exit() { }
 }

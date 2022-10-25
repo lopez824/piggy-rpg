@@ -11,21 +11,26 @@ public class PiggyJump : PiggyState
 
     public override void enter()
     {
-        base.enter();
+        Debug.Log("Entered Jump State");
+        piggyController.anim.SetTrigger("isJumping");
+        piggyController.sound.PlayOneShot(AudioLibrary.library[piggyController.oinkName]);
+
+        // TODO: Implement Behavior Tree
     }
 
-    public override PiggyState handleEvent()
+    public override PiggyState handleEvent(string name)
     {
-        return base.handleEvent();
+        return null;
     }
 
     public override void update()
     {
-        base.update();
+        piggyController.MoveTo(piggyController.player.transform.position);
     }
 
     public override void exit()
     {
-        base.exit();
+        Debug.Log("Exited Jump State");
+        piggyController.anim.ResetTrigger("isJumping");
     }
 }

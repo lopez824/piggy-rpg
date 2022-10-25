@@ -11,21 +11,33 @@ public class PiggyFollow : PiggyState
 
     public override void enter()
     {
-        base.enter();
+        Debug.Log("Entered Follow State");
+        piggyController.anim.SetTrigger("isWalking");
+
+        // TODO: Implement Behavior Tree
     }
 
-    public override PiggyState handleEvent()
+    public override PiggyState handleEvent(string name)
     {
-        return base.handleEvent();
+        switch (name)
+        {
+            case "MoveCancel":
+                return new PiggyIdle(piggyController);
+            case "Jump":
+                return new PiggyJump(piggyController);
+        }
+
+        return null;
     }
 
     public override void update()
     {
-        base.update();
+        piggyController.MoveTo(piggyController.player.transform.position);
     }
 
     public override void exit()
     {
-        base.exit();
+        Debug.Log("Exited Follow State");
+        piggyController.anim.ResetTrigger("isWalking");
     }
 }
