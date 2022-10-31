@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private Vector2 playerInput = Vector2.zero;
     private Vector3 velocity = Vector3.zero;
     private Vector3 desiredVelocity = Vector3.zero;
+    private bool acquiredJump = false;
 
     public Animator anim;
     public Player player;
@@ -50,6 +51,11 @@ public class Player : MonoBehaviour
         currentState.enter();
     }
 
+    public void AcquireJumpAbility()
+    {
+        acquiredJump = true;
+    }
+
     public void Attack(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -79,6 +85,8 @@ public class Player : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (acquiredJump == false) return;
+
         if (context.performed)
         {
             isGrounded = false;
