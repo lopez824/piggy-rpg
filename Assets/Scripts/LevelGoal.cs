@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class LevelGoal : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public UIHandler uiHandler;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
-            Debug.Log("Goal Reached");
+            uiHandler.startMessage.SetText("Hooray! You reached the boat!!");
     }
 }
