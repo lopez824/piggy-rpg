@@ -11,6 +11,9 @@ public class PiggyIdle : PiggyState
 
     public override void enter()
     {
+        if (piggyController.GetDistanceTo(piggyController.player.transform.position) > 3f)
+            piggyController.ChangeState("Move");
+
         Debug.Log("Entered Idle State");
         piggyController.anim.SetTrigger("isIdle");
 
