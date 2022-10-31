@@ -6,6 +6,7 @@ public class PiggyPower : MonoBehaviour
 {
     private Player player;
     private GameObject waterWall;
+    public Vector3 rotationSpeed = Vector3.zero;
 
     private void Awake()
     {
@@ -23,5 +24,10 @@ public class PiggyPower : MonoBehaviour
     protected void EnablePlayerSwim()
     {
         waterWall.SetActive(false);
+    }
+
+    private void Update()
+    {
+        transform.Rotate(rotationSpeed * Time.deltaTime);
     }
 }

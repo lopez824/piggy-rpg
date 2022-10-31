@@ -11,6 +11,12 @@ public class SwimPower : PiggyPower
 
     private void OnTriggerEnter(Collider other)
     {
-        activate();
+        if (other.gameObject.tag == "Player")
+        {
+            AudioSource playerSound = other.gameObject.GetComponent<AudioSource>();
+            playerSound.PlayOneShot(AudioLibrary.library["grunt_1"]);
+            activate();
+        }
+        Destroy(gameObject);
     }
 }
