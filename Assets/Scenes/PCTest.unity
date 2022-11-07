@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultWeather: {fileID: 1666404459}
-  weatherInterval: 60
+  weatherInterval: 5
   weatherEffects:
   - effect: {fileID: 1541296400}
     probability: 0.1
