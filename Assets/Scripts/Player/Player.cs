@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
             piggies.Add(piggy.GetComponent<PiggyAIController>());
         }
 
-        Debug.Log(piggies.Count);
+        //Debug.Log(piggies.Count);
         currentState = new IdleState(player);
         currentState.enter();
     }
