@@ -12,17 +12,29 @@ public class WeatherForecaster : MonoBehaviour
     public List<WeatherData> weatherEffects;
 
     public Dictionary<string, ParticleSystem> weatherParticles;
+    public Dictionary<string, float> weatherProbabilites;
+
+    [HideInInspector]
+    public List<float> probabilityVector;
 
     private Weather currentWeather;
+    private SquareMatrix matrix;
 
     void Awake()
     {
         weatherParticles = new Dictionary<string, ParticleSystem>();
+        weatherProbabilites = new Dictionary<string, float>();
+        probabilityVector = new List<float>();
         
         foreach (WeatherData data in weatherEffects)
         {
             weatherParticles.Add(data.effect.name, data.effect);
+            weatherProbabilites.Add(data.effect.name, data.probability);
+            probabilityVector.Add(data.probability);
         }
+
+        matrix = new SquareMatrix(probabilityVector);
+        matrix.MatrixSquared();
     }
 
     private void Start()
@@ -78,6 +90,7 @@ public class WeatherForecaster : MonoBehaviour
         yield return new WaitForSeconds(weatherInterval);
         
         ChangeWeather();
+        //matrix.MatrixSquared();
         StartCoroutine(UpdateWeather());
     }
 }
