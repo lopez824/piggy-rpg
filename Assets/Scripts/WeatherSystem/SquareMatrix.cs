@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class that represnts a square NxN Matrix
+/// </summary>
 public class SquareMatrix
 {
     public float[,] matrix;
@@ -9,6 +12,7 @@ public class SquareMatrix
     private float[,] currentMatrix;
     private int n;
 
+    // Constructor and intialization
     public SquareMatrix(List<float> data)
     {
         matrix = new float[data.Count, data.Count];
@@ -36,10 +40,9 @@ public class SquareMatrix
         //currentMatrix[2, 0] = 0.4f;
         //currentMatrix[2, 1] = 0.1f;
         //currentMatrix[2, 2] = 0.5f;
-
-        //currentMatrix = matrix;
     }
 
+    // Multiply Matrix with itself
     public void MatrixSquared()
     {
         for (int i = 0; i < n; i++)
@@ -51,6 +54,8 @@ public class SquareMatrix
         }
     }
 
+    // Algorithm I made for square matrix mulplication. Called for every element in matrix.
+    // Product of Nx1 (row) sub-matrix and 1xN (column) sub-matrix, which is a essentially a sum limited by the matrix's size.
     private float RowXCol(int row, int col)
     {
         float product = 0;
