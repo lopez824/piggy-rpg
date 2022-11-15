@@ -8740,24 +8740,40 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8293188382365855776}
     - target: {fileID: 8293188382393929749, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
-      propertyPath: weatherEffects.Array.data[2].effect
+      propertyPath: weatherEffects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293188382393929749, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
+      propertyPath: weatherEffects.Array.data[0].effect
+      value: 
+      objectReference: {fileID: 8293188382365855778}
+    - target: {fileID: 8293188382393929749, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
+      propertyPath: weatherEffects.Array.data[1].effect
       value: 
       objectReference: {fileID: 8293188382365855775}
     - target: {fileID: 8293188382393929749, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
-      propertyPath: weatherEffects.Array.data[3].effect
+      propertyPath: weatherEffects.Array.data[2].effect
       value: 
       objectReference: {fileID: 8293188382365855774}
     - target: {fileID: 8293188382393929749, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
-      propertyPath: weatherEffects.Array.data[4].effect
+      propertyPath: weatherEffects.Array.data[3].effect
       value: 
       objectReference: {fileID: 8293188382365855776}
     - target: {fileID: 8293188382393929749, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
+      propertyPath: weatherEffects.Array.data[4].effect
+      value: 
+      objectReference: {fileID: 8293188382365855777}
+    - target: {fileID: 8293188382393929749, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
       propertyPath: weatherEffects.Array.data[0].probability
-      value: 0
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293188382393929749, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
+      propertyPath: weatherEffects.Array.data[1].probability
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8293188382393929749, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
       propertyPath: weatherEffects.Array.data[2].probability
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8293188382393929749, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
       propertyPath: weatherEffects.Array.data[3].probability
@@ -8765,7 +8781,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8293188382393929749, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
       propertyPath: weatherEffects.Array.data[4].probability
-      value: 0.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8293188382393929754, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
       propertyPath: m_RootOrder
@@ -8830,6 +8846,16 @@ ParticleSystem:
 --- !u!198 &8293188382365855776 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5609731768434178706, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
+  m_PrefabInstance: {fileID: 8293188382365855773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8293188382365855777 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4113456490800981085, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
+  m_PrefabInstance: {fileID: 8293188382365855773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8293188382365855778 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1193421605137271155, guid: d95054bc3a8091f40932ee7f85f39d40, type: 3}
   m_PrefabInstance: {fileID: 8293188382365855773}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8912149176715059770
